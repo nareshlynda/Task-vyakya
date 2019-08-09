@@ -1,0 +1,12 @@
+{% extends 'fileupload/base.html' %}
+{% block content %}
+<div class="row">
+<h2>History Of Past Uploaded Data</h2>
+<button class="btn btn-default"><a href="/logout/">Log Out</a></button>
+</div>
+{% for upload in files %}
+  <p>Uploaded file: <a href="{{ upload.files }}">{{ upload.upload }}</a></p>
+  <p>Submited by: {{ upload.name }}</p>
+{% endfor %} 
+
+{% endblock %}

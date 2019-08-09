@@ -1,0 +1,13 @@
+{% extends 'fileupload/base.html' %}
+{% block content %}
+<div class="row">
+<h2>Upload</h2>
+<button class="btn btn-default"><a href="/logout/">Log Out</a></button>
+</div>  
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+</form>
+ 
+{% endblock %}
