@@ -61,6 +61,9 @@ def login(request):
                         return redirect('/upload/')
                     else:
                         return redirect('/download/')
+        else:
+            print("invalid")  
+            print(request.POST)              
     else:
         form = AuthenticationForm()
     return render(request,'fileupload/login.html', {'form':form})    
