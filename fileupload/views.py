@@ -1,17 +1,17 @@
 from django.shortcuts import render, redirect
-from .forms import UserRegisterForm, UploadForm
+from .forms import UserRegisterForm, UploadForm, UserLoginForm
 from .models import Upload
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
 
 def upload(request):
-    form = UploadForm(request.POST or None, request.FILES or None)
-    if form.is_valid():
-        form.save()
-        return redirect('/prevupload/')
-    
+        form = UploadForm(request.POST or None, request.FILES or None)
+        if form.is_valid():
+            form.save()
+            return redirect('/prevupload/')
+       
      
-    return render(request, 'fileupload/upload.html', {'form' : form})
+        return render(request, 'fileupload/upload.html', {'form' : form})
 
 def prevupload(request):
     files = Upload.objects.all()
@@ -42,15 +42,12 @@ def register(request):
 
 
 
-def login(request):
+def login_view(request):
     if request.method == 'POST':
-        form = AuthenticationForm(request.POST)
+        form = UserLoginForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
-            username = form.cleaned_data['userdata']
+            username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-            user.set_password(password)
-            user.save()
             print(request.user)
             user = authenticate(username=username, password=password)
             if user is not None:
@@ -65,6 +62,6 @@ def login(request):
             print("invalid")  
             print(request.POST)              
     else:
-        form = AuthenticationForm()
+        form = UserLoginForm()
     return render(request,'fileupload/login.html', {'form':form})    
 
